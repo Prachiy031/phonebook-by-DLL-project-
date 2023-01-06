@@ -1,12 +1,3 @@
-
-/******************************************************************************
-
-                            Online C Compiler.
-                Code, Compile, Run and Debug C program online.
-Write your code in this editor and press "Run" button to compile and execute it.
-
-*******************************************************************************/
-
 #include <stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -122,7 +113,7 @@ void searchbynumber (char no[30])
   temp2 = head;
   while (temp2 != NULL)
     {
-      if (strcmp (no, ptr->number) == 0)
+      if (strcmp (no,temp2->number ) == 0)
 	{
 	  printf ("Name found\n");
 	  printf ("Contact details are\n");
@@ -130,7 +121,7 @@ void searchbynumber (char no[30])
 	  printf ("\nNumber:  %s\n", head->number);
 	  printf ("\nGmail:  %s\n", head->gmail);
 	}
-      ptr = ptr->next;
+      temp2 = temp2->next;
     }
 }
 
@@ -266,6 +257,7 @@ int main ()
 	      scanf ("%d", &a);
 	      switch (a)
 		{
+		    
 		case 1:
 		  printf ("Enter the name to be searched\n");
 		  scanf ("%s", name);
@@ -279,19 +271,23 @@ int main ()
 		  break;
 		default:
 		  printf ("\n No proper input given\n");
+		  
 		}
 	      printf ("Do you want to continue searching\n");
 	      scanf ("%d", &ans);
 	    }
+	    
 	  while (ans == 1);
 	  break;
 	  case 6:
 	  return 0;
 	default:
 	  printf ("\n No proper input given\n");
+	  
 	}
 printf("Wanna continue another process?\n");
 scanf("%d",&ans);
+
     }
   while (ans == 1);
 }
