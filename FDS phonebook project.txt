@@ -117,9 +117,9 @@ void searchbynumber (char no[30])
 	{
 	  printf ("Name found\n");
 	  printf ("Contact details are\n");
-	  printf ("\nName:  %s\n", head->name);
-	  printf ("\nNumber:  %s\n", head->number);
-	  printf ("\nGmail:  %s\n", head->gmail);
+	  printf ("\nName:  %s\n", temp2->name);
+	  printf ("\nNumber:  %s\n", temp2->number);
+	  printf ("\nGmail:  %s\n", temp2->gmail);
 	}
       temp2 = temp2->next;
     }
@@ -291,4 +291,3 @@ scanf("%d",&ans);
     }
   while (ans == 1);
 }
-
