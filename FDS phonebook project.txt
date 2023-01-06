@@ -1,0 +1,298 @@
+
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+struct phbook
+{
+  char number[50];
+  char gmail[40];
+  char name[30];
+  struct phbook *prev;
+  struct phbook *next;
+};
+
+typedef struct phbook pbook;
+
+
+void insert ();
+void deletecontact (char[]);
+void searchbyname (char[]);
+void searchbynumber (char[]);
+void accept ();
+void display ();
+void update (char[]);
+
+ pbook *head = NULL;
+ pbook *ptr = NULL;
+
+void accept ()
+{
+  int ans;
+  do
+    {
+     
+      pbook *temp = (pbook *) malloc (sizeof (pbook));
+      printf ("\nEnter the name:   ");
+      scanf ("%s", temp->name);
+      printf ("Enter the number:   ");
+      scanf ("%s", temp->number);
+      while (strlen (temp->number) != 10)
+	{
+	  printf ("Enter a valid number:");
+	  scanf ("%s", temp->number);
+	}
+      printf ("Enter the gmail:    ");
+      scanf ("%s", temp->gmail);
+
+    if (head == NULL)
+	{
+	    printf("head is null\n");
+	  head = temp;
+	  head->prev = NULL;
+	  head->next = NULL;
+	  temp = NULL;
+	}
+    else
+	{
+        head->prev = temp;
+        temp->prev = NULL;
+        temp->next = head;
+        head = temp;
+        temp = NULL;
+        printf("Head is %s, next is : %s\n",head->name,head->next->name);
+	}
+
+      printf ("DO YOU WANT TO CONTINUE INSERTION ? 1 - Yes 0 - No : ");
+      scanf ("%d", &ans);
+      
+      
+    }while (ans == 1);
+}
+
+void insert ()
+{
+  accept ();
+}
+
+
+void display ()
+{
+  ptr = head;
+  int i=1;
+  while (ptr != NULL)
+    {
+      printf("%d :",i);                                     
+      printf ("\nName:  %s\n", ptr->name);
+      printf ("Number:  %s\n", ptr->number);
+      printf ("Gmail:  %s\n", ptr->gmail);
+      ptr = ptr->next;
+      i++;
+    }
+}
+
+void searchbyname (char p[20])
+{
+  ptr = head;
+  while (ptr != NULL)
+    {
+      if (strcmp (p, ptr->name) == 0)
+	{
+	  printf ("Name found\n");
+	  printf ("Contact details are\n");
+	  printf ("\nName:  %s\n", ptr->name);
+	  printf ("\nNumber:  %s\n", ptr->number);
+	  printf ("\nGmail:  %s\n", ptr->gmail);
+	}
+      ptr = ptr->next;
+    }
+}
+
+void searchbynumber (char no[30])
+{
+  struct phbook *temp2;
+  temp2 = head;
+  while (temp2 != NULL)
+    {
+      if (strcmp (no, ptr->number) == 0)
+	{
+	  printf ("Name found\n");
+	  printf ("Contact details are\n");
+	  printf ("\nName:  %s\n", head->name);
+	  printf ("\nNumber:  %s\n", head->number);
+	  printf ("\nGmail:  %s\n", head->gmail);
+	}
+      ptr = ptr->next;
+    }
+}
+
+void update (char n[20])
+{
+  int ans;
+  int c;
+  ptr = head;
+  while (ptr != NULL)
+    {
+      int res = strcmp (n, ptr->name);            //comparing character by character
+      if (res == 0)
+	{
+
+	  do
+	    {
+	      printf
+		("What do you want to update?\n 1. Name\n 2.Phone number\n 3. Gmail\n");
+	      scanf ("%d", &c);
+	      switch (c)
+		{
+		case 1:
+		  printf ("Enter new name\n");
+		  scanf ("%s", ptr->name);
+		  break;
+		case 2:
+		  printf ("Enter new phone number\n");
+		  scanf ("%s", ptr->number);
+		  while (strlen (ptr->number) != 10)
+		    {
+		      printf ("Enter a valid number\n");
+		      scanf ("%s", ptr->number);
+		    }
+		  break;
+		case 3:
+		  printf ("Enter new gmail\n");
+		  scanf ("%s", ptr->gmail);
+		  break;
+		}
+	      printf ("\nDo you want to continue\n");
+	      scanf ("%d", &ans);
+	    }
+	  while (ans == 1);
+	}
+      ptr = ptr->next;
+    }
+}
+
+void delete ()
+{
+  //struct phbook *temp, *q;
+  char contact[50];
+  printf ("Enter the contact number to be deleted\n");
+  scanf ("%s", contact);
+  printf("%s",contact);
+  ptr = head;
+  struct phbook *temp = NULL;
+  
+  //if head is to be deleted
+  if (strcmp (contact, ptr->number) == 0 && ptr == head)
+  {
+      temp = head;
+      head = head->next;    //new head
+      if(head != NULL)      // ie there were more than 1 entries     //not a single value is present
+      head->prev = NULL;    // prev of new head is null
+      printf("Entry Deleted successfully\n");
+      free(temp);
+      return;
+  }
+  // entry other than head is to be deleted
+  ptr = head->next;     // 2nd entry is ptr
+    while (ptr != NULL)
+    {
+        if (strcmp (contact, ptr->number) == 0)
+        {
+            temp = ptr;
+            ptr->prev->next = ptr->next;        // the next of entry previous to ptr will be
+                                                // the next of ptr as ptr will be deleted
+            free(temp);
+            printf("\nEntry Deleted Successfully\n");
+            return;
+        }
+        ptr = ptr->next; 
+    }
+    printf("\nEntry not found\n");
+    
+}
+
+int main ()
+{
+  char n[20];
+  char name[10];
+  char number[10];
+  char gmail[20];
+  int ans = 1;
+  int ch, a;
+
+
+  struct phbook *ptr;
+  struct phbook *head;
+  head = (struct phbook *) malloc (sizeof (struct phbook));
+  head = NULL;
+  printf ("**************        PHONE BOOK      ********************");
+  printf ("\nLets create our phonebook");
+
+  accept ();
+  do
+    {
+      printf
+	("\n\n\n 1.Display your phonebook\n 2.Insert new contact\n 3.Update details on existing contact\n 4.Delete contact\n 5.search\n6.Exit");
+      scanf ("%d", &ch);
+      switch (ch)
+	{
+	case 1:
+	  display ();
+	  break;
+	case 2:
+	  accept();
+	  break;
+	case 3:
+	  printf
+	    ("Enter the name of person whose details you want to update\n");
+	  scanf ("%s", n);
+	  update (n);
+	  break;
+	case 4:
+	  delete ();
+	  break;
+	case 5:
+	  do
+	    {
+	      printf ("1.Search by name\n 2.Search by number\n");
+	      scanf ("%d", &a);
+	      switch (a)
+		{
+		case 1:
+		  printf ("Enter the name to be searched\n");
+		  scanf ("%s", name);
+		  searchbyname (name);
+		  break;
+
+		case 2:
+		  printf ("Enter the number to be searched\n");
+		  scanf ("%s", number);
+		  searchbynumber (number);
+		  break;
+		default:
+		  printf ("\n No proper input given\n");
+		}
+	      printf ("Do you want to continue searching\n");
+	      scanf ("%d", &ans);
+	    }
+	  while (ans == 1);
+	  break;
+	  case 6:
+	  return 0;
+	default:
+	  printf ("\n No proper input given\n");
+	}
+printf("Wanna continue another process?\n");
+scanf("%d",&ans);
+    }
+  while (ans == 1);
+}
+
